@@ -5,10 +5,15 @@
     <nav>
         <ul> 
             {% for article in listeArticles %}
-                <li><a href="{{path('articleBlog', {'id': article.id}) }}" title="{{ article.title }}">{{ article.title }}</a></li>
+                <li><a href="{{path('articleBlog', {'id': article.id}) }}" title="{{ article.title }}">{{ article.title }}</a>
+                    <a href="{{path('editerArticle', {'id': article.id}) }}" title="modifier l'article {{ article.title }}">[modifier]</a> 
+                    <a href="{{path('supprimerArticle', {'id': article.id}) }}" title="supprimer l'article {{ article.title }}">[supprimer]</a>
+                </li>
             {% endfor %}
         </ul>
         <p><a href="{{path('publierArticle')}}" title="">[+] ajouter un article</a></p>
     </nav>
 
 {% endblock %}
+
+

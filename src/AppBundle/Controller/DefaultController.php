@@ -10,6 +10,7 @@ use AppBundle\Entity\Article ;
 use AppBundle\Form\ArticleType ;
 
 
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
 class DefaultController extends Controller
@@ -119,10 +120,15 @@ class DefaultController extends Controller
      * @Route("/blog/{id}", name="articleBlog")
      */
     public function showArticleAction($id) {
-         
+        if($id == 0) {
+            $erreur = "L'article a été correctement supprimé" ;
+        } else {
+            $erreur = "" ;
+        }
+        
         $articleDB = $this->getDoctrine()->getManager()->getRepository(Article::class)->findOneById($id);
         
-        if(!$articleDB || $articleDB->getIsEnabled() != true) {
+        if($id != 0 && (!$articleDB || $articleDB->getIsEnabled() != true)) {
             $erreur = "Cet article n'existe pas ou n'est pas disponible actuellement" ;
             
             return $this->render('AppBundle:Default:article.html.twig', array(
@@ -135,7 +141,7 @@ class DefaultController extends Controller
         } else {
             return $this->render('AppBundle:Default:article.html.twig', array(
                 'article' => $articleDB,
-                'erreur' => ""
+                'erreur' => $erreur
             ));
         }
     }
@@ -208,8 +214,8 @@ class DefaultController extends Controller
             $request->getSession()->getFlashBag()->add('notice', 'Article enregistré') ;
             
             return $this->redirect($this->generateUrl('articleBlog', [
-                    'id' => $articleDB->getId()
-                ]
+                'id' => $articleDB->getId()
+            ]
             ));
         } 
           
@@ -226,15 +232,19 @@ class DefaultController extends Controller
     /**
      * Crée un formulaire pour supprimer un Article
      */
-    private function createDeleteForm(Article $article)
-    {
+    private function createDeleteForm(Article $article) {
         //on crée un formulaire
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('article_delete', array('id' => $article->getId())))
+            ->setAction($this->generateUrl('supprimerArticle', array('id' => $article->getId())))
             ->setMethod('DELETE')
-            ->add('delete', SubmitType::class)
-            ->getForm()
-        ;
+            ->add('delete', SubmitType::class, [
+                'label' => 'Suppression irréversible !',
+                'attr'  => [
+                    'class' => 'champForm'
+                ]
+            ])
+                
+            ->getForm() ;
     }
     
     /**
@@ -245,7 +255,45 @@ class DefaultController extends Controller
         
         $articleToRIP = $this->getDoctrine()->getManager()->getRepository(Article::class)->findOneById($id);
         
-        $formSuppression = createDeleteForm($articleToRIP)
+        if(!$articleToRIP) {
+            $erreur = "Cet article n'existe pas, il n'est donc pas possible de le supprimer" ;
+            
+            return $this->render('AppBundle:Default:supprArticle.html.twig', array(
+                'erreur' => $erreur,
+                'formulaire' => "",
+                'article' => ""
+            ));
+            
+        } else {
+            
+            $formSuppression = $this->createDeleteForm($articleToRIP) ;
+
+            $formSuppression->handleRequest($request) ;
+                
+            if ($formSuppression->isValid()) {
+                $em = $this->getDoctrine()->getManager() ;
+                $em->remove($articleToRIP) ;
+                $em->flush() ;
+
+                $request->getSession()->getFlashBag()->add('notice', 'Article supprimé') ;
+
+                return $this->redirect($this->generateUrl('articleBlog', [
+                        'id' => 0
+                    ]
+                ));
+            } 
+          
+            return $this->render('AppBundle:Default:supprArticle.html.twig', array(
+                'erreur' => "",
+                'formulaire' => $formSuppression->createView(),
+                'article' => $articleToRIP
+            ));
+        }
+        
+        
+        
+        
+        
     }
     
 }
