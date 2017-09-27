@@ -1,0 +1,22 @@
+{% extends '::layout.html.twig' %}
+
+{% block content %}
+    <article>
+        {% if erreur %}
+            <h2>Article introuvable</h2>
+            <p class="erreur">Erreur : {{erreur}}</p>
+        {% endif %}
+        
+        {% if article %}
+            <h2>{{article.title}}</h2>
+            {% if article.updatedAt != null %}
+                <time datetime="{{article.updatedAt|date('d-m-Y')}}">Dernière édition le {{article.updatedAt|date('d-m-Y')}}</time>
+            {% else %}
+                <time datetime="{{article.createdAt|date('d-m-Y')}}">Créé le {{article.createdAt|date('d-m-Y')}}</time>
+            {% endif %}
+            <p>{{article.content}}</p>
+            <p><em>{{article.nbLike}} personnes aiment cet article</em></p>
+        {% endif %}
+    </article>
+{% endblock %}
+

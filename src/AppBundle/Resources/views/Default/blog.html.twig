@@ -1,0 +1,14 @@
+{% extends '::layout.html.twig' %}
+
+{% block content %}
+    <h1>{{title}}</h1>
+
+<p>
+{% if lang == "fr" %}
+    Voici l'article {{title}}, de l'année {{year}}, en langue {{lang}}
+{% else %}
+    This is the {{title}} article, year {{year}} (in {{lang}})
+{% endif %}
+</p>   
+
+{% endblock %}

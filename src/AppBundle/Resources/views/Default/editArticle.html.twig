@@ -1,0 +1,21 @@
+{% extends '::layout.html.twig' %}
+
+{% block content %}
+    <article>
+        {% if erreur %}
+            <h2>Article introuvable</h2>
+            <p class="erreur">Erreur : {{erreur}}</p>
+        {% endif %}
+        
+        {% if formulaire %}
+            <h2>Editer un article</h2>
+                {{ form_start(formulaire) }}
+                {{ form_widget(formulaire) }}
+                {{ form_end(formulaire) }}
+        {% endif %}
+        
+    </article>
+{% endblock %}
+
+
+

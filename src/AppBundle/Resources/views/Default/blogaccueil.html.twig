@@ -1,0 +1,14 @@
+{% extends '::layout.html.twig' %}
+
+{% block content %}
+    <h1>Liste des articles</h1>
+    <nav>
+        <ul> 
+            {% for article in listeArticles %}
+                <li><a href="{{path('articleBlog', {'id': article.id}) }}" title="{{ article.title }}">{{ article.title }}</a></li>
+            {% endfor %}
+        </ul>
+        <p><a href="{{path('publierArticle')}}" title="">[+] ajouter un article</a></p>
+    </nav>
+
+{% endblock %}

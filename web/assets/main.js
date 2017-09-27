@@ -1,0 +1,1 @@
+//alert('Hey, je suis du js fonctionnnel !') ;

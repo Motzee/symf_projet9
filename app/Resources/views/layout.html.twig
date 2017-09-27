@@ -1,0 +1,17 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+    {{ include("::header.html.twig") }}
+    <div id="centrepage">
+    {{ include("::menu.html.twig") }}
+    
+    <main>
+        {% block content %}
+
+        {% endblock content %}
+    </main>
+    </div>
+    {{ include("::footer.html.twig") }}
+{% endblock body %}
+

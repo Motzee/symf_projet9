@@ -1,0 +1,113 @@
+* {
+    box-sizing : border-box ;
+}
+
+body {
+    margin : 0 ;
+    padding : 0 ;
+    font-family : sans-serif ;
+    display : flex ;
+    flex-direction : column ;
+    flex-wrap : wrap ;
+    min-height : 100vh ;
+}
+
+p, li {
+    max-width : 100ch ;
+    font-size : 1rem ;
+}
+
+/* Titres */
+h1 {
+    font-size : 2rem ;
+    text-align : center ;
+}
+
+h2 {
+    font-size : 1.8rem ;
+}
+
+h3 {
+    font-size : 1.6rem ;
+    margin-left : 25px ;
+}
+
+/*Bannière*/
+
+footer, header {
+    background : yellow ;
+}
+
+/* Partie centrale */
+#centrepage {
+    display : flex ;
+    flex-grow : 1 ;
+}
+
+
+/* Menus de navigation*/
+nav {
+    padding : 10px ;
+}
+
+#nav_principal {
+    background : lightpink ;
+    width : 20% ;
+    min-width : 150px ;
+    max-width : 450px ;
+}
+
+nav ul {
+    list-style : none ;
+    padding : 0 ;
+    margin : 0
+}
+
+nav ul a {
+    text-decoration : none ;
+}
+
+
+/*Contenu*/
+
+main {
+    flex-grow : 1 ;
+    background : lightgreen ;
+    padding : 10px ;
+    min-width : 320px ;
+}
+
+
+
+/*Pied de page*/
+
+footer {
+    display : flex ;
+    justify-content : space-between ;
+    align-items : center ;
+    padding : 0 15px 0 15px ;
+}
+
+
+/**/
+.erreur {
+    background : lightcoral ;
+    border : 1px solid grey ;
+    border-radius : 15px ;
+    max-width : 75ch ;
+    margin : auto ;
+    padding : 15px ;
+}
+
+@media screen and (max-width: 470px) {
+    #nav_principal {
+        width : 100% ;
+    }
+
+    #centrepage, footer {
+        flex-direction : column-reverse ;
+        /*
+        flex-wrap : wrap ;*/
+    }
+    
+}
