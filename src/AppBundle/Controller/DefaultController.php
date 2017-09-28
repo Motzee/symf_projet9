@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Entity\Article ;
+use AppBundle\Entity\Category ;
 use AppBundle\Form\ArticleType ;
 
 
@@ -289,11 +290,43 @@ class DefaultController extends Controller
                 'article' => $articleToRIP
             ));
         }
+    }    
         
         
         
         
         
-    }
+     /**
+     * @Route("/categories", name="listCateg")
+     */
+
+    public function categoriesAction(Request $request) {
+        $listingCategs = $this->getDoctrine()->getRepository(Category::class)->findAll();
+        
+        return $this->render('AppBundle:Default:categorie.html.twig', array(
+                'listeCateg' => $listingCategs
+            ));
+        
+        
+    }   
+        
+    /**
+     * @Route("/categories/tri", name="listCategTri")
+     */
+
+    public function categoriesTriAction(Request $request) {
+        $listingCategs = $this->getDoctrine()->getRepository(Category::class)->findByOrder();
+        
+        return $this->render('AppBundle:Default:categorie.html.twig', array(
+                'listeCateg' => $listingCategs
+            ));
+        
+        
+    }    
+        
+        
+        
+        
+    
     
 }

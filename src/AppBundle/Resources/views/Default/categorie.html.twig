@@ -1,0 +1,12 @@
+{% extends '::layout.html.twig' %}
+
+{% block content %}
+    {% for categ in listeCateg %}
+        
+        {% include 'AppBundle:Default:category.html.twig' with {"cat" : categ} %}
+        
+    {% endfor %}    
+{% endblock %}
+
+
+        
